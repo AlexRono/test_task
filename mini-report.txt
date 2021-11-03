@@ -1,0 +1,15 @@
+1) При первом запуске получатель выдал ошибку
+"A transport error has occurred The HTTP response from the server [400] did not permit the HTTP upgrade to WebSocket"
+Решил путем добавления DefaultHandshakeHandler`а и TomcatRequestUpgradeStrategy в конфиг отправителя.
+
+2) Сообщения приходили, но с обработкой была проблема:
+"org.springframework.messaging.converter.MessageConversionException: 
+Could not read JSON: Java 8 date/time type `java.time.Instant` 
+not supported by default: add Module 
+"com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling"
+Зависимость я добавил, но это не помогло. 
+Пришлось немного кастомизировать MappingJackson2MessageConverter, зарегистрировать JavaTimeModule()
+
+3) На данный момент событие отписки receiver`а не перехватывается на стороне отправителя, то есть метод "handleSessionUnsubscribeEvent" не вызывается.
+Это не входило в постановку задачи, но мне хотелось за этим проследить. 
+

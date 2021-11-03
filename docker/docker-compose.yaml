@@ -1,0 +1,31 @@
+version: '2.1'
+services:
+  sender-server:
+    container_name: sender
+    build:
+      context: ../sender
+    image: docker.io/alexk/sender:latest
+    hostname: sender
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-cloud-network-receiverapp
+  receiver-server:
+    container_name: receiver
+    build:
+      context: ../receiver
+    depends_on:
+      sender-server:
+        condition: service_started
+    links:
+      - sender-server
+    image: docker.io/alexk/receiver:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8070:8070"
+    networks:
+      - spring-cloud-network-receiverapp
+networks:
+  spring-cloud-network-receiverapp:
+    driver: bridge

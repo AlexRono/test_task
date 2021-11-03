@@ -10,6 +10,26 @@ not supported by default: add Module
 Зависимость я добавил, но это не помогло. 
 Пришлось немного кастомизировать MappingJackson2MessageConverter, зарегистрировать JavaTimeModule()
 
-3) На данный момент событие отписки receiver`а не перехватывается на стороне отправителя, то есть метод "handleSessionUnsubscribeEvent" не вызывается.
-Это не входило в постановку задачи, но мне хотелось за этим проследить. 
+3) На данный момент событие отписки receiver`а не перехватывается на стороне отправителя,
+то есть метод "handleSessionUnsubscribeEvent" не вызывается.
+Это не входило в постановку задачи, но мне хотелось за этим проследить.
 
+Предполагалось, что приложение будут запускать так:
+- maven package
+- docker-compose up --build
+...и этот путь превосходно работал до того момента как я решил добавить секцию build в Dockerfile.
+(FROM maven:3.6.0-jdk-11-slim AS build итд )
+
+Проект перестал запускаться, ввиду ошибки:
+#15 1.564 [FATAL] Non-resolvable parent POM for com.alex:receiver:0.0.1-SNAPSHOT:
+Could not find artifact org.thetask:SenderReceiver:pom:1.0-SNAPSHOT and 'parent.relativePath'
+points at wrong local POM @ line 5, column 10
+#15 1.582  @
+
+Несмотря на то, что я указал <relativePath>../pom.xml</relativePath>
+(пробовал разные варианты)
+проект все равно не поднялся.
+
+А так как время уже подходит к моменту показа проекта, высылаю as is.
+
+Надо было не трогать билд, но уже что поделать.

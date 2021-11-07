@@ -3,7 +3,8 @@ services:
   sender-server:
     container_name: sender
     build:
-      context: ../sender
+      context: ..
+      dockerfile: ./sender/Dockerfile
     image: docker.io/alexk/sender:latest
     hostname: sender
     ports:
@@ -13,7 +14,8 @@ services:
   receiver-server:
     container_name: receiver
     build:
-      context: ../receiver
+      context: ..
+      dockerfile: ./sender/Dockerfile
     depends_on:
       sender-server:
         condition: service_started

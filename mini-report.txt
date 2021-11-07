@@ -14,22 +14,6 @@ not supported by default: add Module
 то есть метод "handleSessionUnsubscribeEvent" не вызывается.
 Это не входило в постановку задачи, но мне хотелось за этим проследить.
 
-Предполагалось, что приложение будут запускать так:
-- maven package
-- docker-compose up --build
-...и этот путь превосходно работал до того момента как я решил добавить секцию build в Dockerfile.
-(FROM maven:3.6.0-jdk-11-slim AS build итд )
-
-Проект перестал запускаться, ввиду ошибки:
-#15 1.564 [FATAL] Non-resolvable parent POM for com.alex:receiver:0.0.1-SNAPSHOT:
-Could not find artifact org.thetask:SenderReceiver:pom:1.0-SNAPSHOT and 'parent.relativePath'
-points at wrong local POM @ line 5, column 10
-#15 1.582  @
-
-Несмотря на то, что я указал <relativePath>../pom.xml</relativePath>
-(пробовал разные варианты)
-проект все равно не поднялся.
-
-А так как время уже подходит к моменту показа проекта, высылаю as is.
-
-Надо было не трогать билд, но уже что поделать.
+4) Починил билд-стадию, теперь приложение запускается через docker-compose.yaml.
+Но есть проблема, receiver не подключается к sender, связано это скорее всего с неверной реализацие реконнекта.
+Буду править.

@@ -22,7 +22,7 @@ class WebSocketSenderConfig : WebSocketMessageBrokerConfigurer {
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
         registry.addEndpoint("/sender").withSockJS()
         registry.addEndpoint("/sender")
-                .setHandshakeHandler(DefaultHandshakeHandler(upgradeStrategy))
-                .setAllowedOrigins("*");
+            .setHandshakeHandler(DefaultHandshakeHandler(upgradeStrategy))
+            .setAllowedOrigins("*")
     }
 }

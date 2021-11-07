@@ -3,7 +3,6 @@ package com.alex.sender.config
 import org.springframework.context.event.EventListener
 import org.springframework.messaging.support.GenericMessage
 import org.springframework.stereotype.Component
-import org.springframework.web.socket.messaging.SessionDisconnectEvent
 import org.springframework.web.socket.messaging.SessionSubscribeEvent
 import org.springframework.web.socket.messaging.SessionUnsubscribeEvent
 import java.util.concurrent.atomic.AtomicBoolean
@@ -14,6 +13,7 @@ class SubscribeEventListener {
     companion object {
         val isReceiverConnected = AtomicBoolean(false)
     }
+
     @EventListener
     fun handleSessionSubscribeEvent(event: SessionSubscribeEvent) {
         val message = event.message as GenericMessage<*>
@@ -23,6 +23,7 @@ class SubscribeEventListener {
             isReceiverConnected.set(true)
         }
     }
+
     @EventListener
     fun handleSessionUnsubscribeEvent(event: SessionUnsubscribeEvent) {
         val message = event.message as GenericMessage<*>

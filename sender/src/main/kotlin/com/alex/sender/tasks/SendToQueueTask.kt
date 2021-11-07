@@ -18,14 +18,17 @@ class SendToQueueTask {
     @Scheduled(fixedRate = 2000)
     fun sendMessage() {
         if (SubscribeEventListener.isReceiverConnected.get()) {
-            template.convertAndSendToUser("receiver", "/messages", generateNewMessage())
+            val message = generateNewMessage()
+            template.convertAndSendToUser("receiver", "/messages", message)
+            println("Sender sent message with id: ${message.id}")
         }
     }
 
     private fun generateNewMessage(): DataMessage {
         return DataMessage(
-                UUID.randomUUID().toString(),
-                Instant.now(),
-                Random().nextDouble())
+            UUID.randomUUID().toString(),
+            Instant.now(),
+            Random().nextDouble()
+        )
     }
 }

@@ -17,3 +17,14 @@ not supported by default: add Module
 4) Починил билд-стадию, теперь приложение запускается через docker-compose.yaml.
 Но есть проблема, receiver не подключается к sender, связано это скорее всего с неверной реализацие реконнекта.
 Буду править.
+UPDATE: переписал receiver'а, поправил compose, теперь всё стартует одной командой, получается осталась
+только проблема, описанная в пункте "3)".
+
+Пример консольного вывода:
+sender    | Sender sent message with id: c5ac5356-f950-42f6-9291-fd5a201aecf7
+receiver  | 2021-11-07 19:16:58.921 TRACE 1 --- [lient-AsyncIO-4] o.s.m.simp.stomp.DefaultStompSession
+: Received MESSAGE {destination=[/user/receiver/messages], content-type=[application/json], subscription=[0], message-id=[5c5
+b1925-e191-5769-5aaf-c397a709a57e-7], content-length=[114]} session=493b5ee7-f60a-c24d-f8a7-54a5e3f6b7de
+application/json payload={"id":"c5ac5356-f950-42f6-9291-fd5a201aecf7","timestamp":"2021-11-07T19:16:58.91...(truncated)
+sender    | Receiver received message with id: c5ac5356-f950-42f6-9291-fd5a201aecf7
+

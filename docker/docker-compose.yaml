@@ -10,24 +10,19 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - spring-cloud-network-receiverapp
+      - send-receive-network
   receiver-server:
     container_name: receiver
     build:
       context: ..
-      dockerfile: ./sender/Dockerfile
-    depends_on:
-      sender-server:
-        condition: service_started
-    links:
-      - sender-server
+      dockerfile: ./receiver/Dockerfile
     image: docker.io/alexk/receiver:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
       - "8070:8070"
     networks:
-      - spring-cloud-network-receiverapp
+      - send-receive-network
 networks:
-  spring-cloud-network-receiverapp:
+  send-receive-network:
     driver: bridge
